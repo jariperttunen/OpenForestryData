@@ -18,4 +18,6 @@
 module load geoconda/3.7
 
 srun python Python/check_properties.py
-
+wait
+srun python Python/extract_forest.py
+wait
