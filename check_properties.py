@@ -13,8 +13,8 @@ path_scratch = "/scratch/project_2000611/Temporary/"
 #Folder keeping data that doesn't change
 path_user = "/users/eyvindso/Church/"
 #List of properties to be included in the shapefile
-Kiinte = pd.read_csv(path_user+"DATA/properties.csv",header = None)
-print(Kiinte)
+Kiinte = pd.read_csv(path_user+"DATA/Kiinteistotunnukset_string.csv",sep=";", dtype=str)
+Kiinte = list(Kiinte['TUNNUS'])
 
 #DOWNLOAD Kiinteisto information done in the bash file.
 os.chdir(path_scratch+"kiint")
@@ -35,11 +35,11 @@ def run_zips(i):
         zip_ref.extractall(path_scratch +"kiint/"+i[0:-4]+"/")
     shape = gpd.read_file(path_scratch +"kiint/"+i[0:-4]+"/"+i[0:-4]+"_palstaalue.shp")
     #Extract only those properties that are desired.
-    if len(shape[shape['TPTEKSTI'].isin(Kiinte[0])])> 0:
-        t3 = shape[shape['TPTEKSTI'].isin(Kiinte[0])]
+    if len(shape[shape['TUNNUS'].isin(Kiinte)])> 0:
+        t3 = shape[shape['TUNNUS'].isin(Kiinte)]
     else:
         t3 = 0
-    if len(shape[shape['TPTEKSTI'].isin(Kiinte)]) > 0:
+    if len(shape[shape['TUNNUS'].isin(Kiinte)]) > 0:
         with zipfile.ZipFile("/scratch/project_2000611/Temporary/kiint/"+i, 'r') as zip_ref:
             zip_ref.extractall("/scratch/project_2000611/Temporary/kiint/keep/")
     shutil.rmtree(path_scratch +"kiint/"+i[0:-4])
@@ -75,5 +75,5 @@ for i in DATA:
             t3 = t3.append(i)
 
 
-t3.to_file(path_user +"DATA/ALL_Properties_CHURCH.shp")        
+t3.to_file(path_user +"DATA/ALL_Properties_FARM.shp")        
     
