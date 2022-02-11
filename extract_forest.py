@@ -16,10 +16,10 @@ from bs4 import BeautifulSoup
 import multiprocessing as mp
 
 #DEFINE PATHS
-path_user = "/users/eyvindso/Church/DATA/"
+path_user = "/users/eyvindso/Church/DATA/" #NEEDS EDITING
 path_scratch = "/scratch/project_2000611/Temporary/"
 #DEFINE SHAPEFILE FOR PROPERTIES
-Properties = gpd.read_file(path_user + "/ALL_Properties_CHURCH.shp")
+Properties = gpd.read_file(path_user + "/ALL_Properties_FARM.shp")
 
 #List of metsään geopackage databases
 os.chdir(path_scratch +"Full_Metsaan")
@@ -59,7 +59,7 @@ for i in DATA:
         t3 = t3.append(i)
         ids = ids.append(i['standid'])
 t3 = t3.drop_duplicates() 
-t3.to_file(path_user +"ALL_FOREST_CHURCH_check.shp")
+t3.to_file(path_user +"ALL_FOREST_FARM_check.shp")
 
 
 #Option 2: select based off of id.
@@ -85,5 +85,5 @@ for i in DATA:
         t3 = t3.append(i)
         ids = ids.append(i['standid'])
 t3 = t3.drop_duplicates() 
-t3.to_file(path_user +"ALL_FOREST_CHURCH_by_id.shp")
+t3.to_file(path_user +"ALL_FOREST_FARM_by_id.shp")
 
